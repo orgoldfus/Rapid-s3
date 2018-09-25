@@ -2,7 +2,7 @@ const shortid = require('shortid');
 const fs = require('fs').promises
 const path = require('path');
 const STORAGE_PATH = path.join(__root, 'storage');
-const FileModel = require('../models/fileModel');
+const FileModel = require('../../models/fileModel');
 
 async function uploadFileMultipart (req, res) { 
   const file = req.file;
@@ -12,7 +12,7 @@ async function uploadFileMultipart (req, res) {
 
   const receivedAccessType = req.body.accessType && req.body.accessType.toLowerCase();
   if (receivedAccessType && !['private', 'public'].includes(receivedAccessType)) {
-    await deleteFile(file)
+    await deleteFile(file.filename)
     return res.status(400).send('accessType can be either private or public');
   }
 
@@ -23,7 +23,7 @@ async function uploadFileMultipart (req, res) {
   }).exec();
 
   if (fileExists) {
-    await deleteFile(file)
+    await deleteFile(file.filename)
     return res.status(409).send('File already exists');
   }
 
@@ -42,7 +42,7 @@ async function uploadFileMultipart (req, res) {
     accessToken
   });
 
-  // Remove deleted file with same name
+  // Remove deleted file with same name (if exists)
   await FileModel.remove({
     userId: req.user.id,
     name: file.originalname,
@@ -56,8 +56,8 @@ async function uploadFileMultipart (req, res) {
  });
 }
 
-async function deleteFile(file) {
-  await fs.unlink(`${STORAGE_PATH}/${file.filename}`);
+async function deleteFile(fileName) {
+  await fs.unlink(`${STORAGE_PATH}/${fileName}`);
 }
 
 module.exports = uploadFileMultipart

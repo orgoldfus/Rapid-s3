@@ -3,12 +3,17 @@ const path = require('path');
 const multer  = require('multer');
 const STORAGE_PATH = path.join(__root, 'storage');
 const storage = multer({ dest: STORAGE_PATH });
-const { getUser, getFile, validateAccessToken } = require('../lib/middleware');
-
-const uploadFile = require('./upload');
-const updateFile = require('./update');
-const downloadFile = require('./download');
-const deleteFile = require('./delete');
+const {
+  getUser, 
+  getFile, 
+  validateAccessToken
+} = require('../lib/middleware');
+const {
+  uploadFile,
+  updateFile,
+  downloadFile,
+  deleteFile
+} = require('./file')
 
 router.post('/:userId', 
   storage.single('file'), 
