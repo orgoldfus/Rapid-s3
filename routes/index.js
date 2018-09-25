@@ -1,9 +1,37 @@
-var express = require('express');
-var router = express.Router();
+const router = require('express').Router();
+const path = require('path');
+const multer  = require('multer');
+const STORAGE_PATH = path.join(__root, 'storage');
+const storage = multer({ dest: STORAGE_PATH });
+const { getUser, getFile, validateAccessToken } = require('../lib/middleware');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+const uploadFile = require('./upload');
+const updateFile = require('./update');
+const downloadFile = require('./download');
+const deleteFile = require('./delete');
+
+router.post('/:userId', 
+  storage.single('file'), 
+  getUser, 
+  uploadFile
+);
+router.post('/:userId/:fileIdentifier', 
+  getUser, 
+  getFile, 
+  validateAccessToken, 
+  updateFile
+);
+router.get('/:userId/:fileIdentifier', 
+  getUser, 
+  getFile, 
+  validateAccessToken, 
+  downloadFile
+);
+router.delete('/:userId/:fileIdentifier', 
+  getUser, 
+  getFile, 
+  validateAccessToken, 
+  deleteFile
+);
 
 module.exports = router;
