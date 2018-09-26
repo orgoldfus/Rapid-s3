@@ -602,6 +602,10 @@ expand-brackets@^2.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+express-async-errors@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/express-async-errors/-/express-async-errors-3.0.0.tgz#457d06952504718276697cebf9c332bccf2944dd"
+
 express@~4.16.0:
   version "4.16.3"
   resolved "http://registry.npmjs.org/express/-/express-4.16.3.tgz#6af8a502350db3246ecc4becf6b5a34d22f7ed53"
