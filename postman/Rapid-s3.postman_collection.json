@@ -1,0 +1,321 @@
+{
+	"info": {
+		"_postman_id": "6cacd6f6-55e4-4e1a-b047-7c94abd5c7e2",
+		"name": "Rapid-s3",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Upload public file - user1",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file"
+						},
+						{
+							"key": "accessType",
+							"value": "public",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/qAzef32F",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"qAzef32F"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Upload private file - user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "606e8922-142b-4f48-9dcd-cc0bbafda73f",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"user2FileId\", jsonData.fileId);",
+							"postman.setEnvironmentVariable(\"user2FileToken\", jsonData.accessToken);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "file",
+							"type": "file"
+						},
+						{
+							"key": "accessType",
+							"value": "private",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/hT9Lmdx",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"hT9Lmdx"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update file access to private - user1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91f3c83d-5fba-4064-b825-5b99ab195846",
+						"type": "text/javascript",
+						"exec": [
+							"var jsonData = JSON.parse(responseBody);",
+							"postman.setEnvironmentVariable(\"user1FileId\", jsonData.fileId);",
+							"postman.setEnvironmentVariable(\"user1FileToken\", jsonData.accessToken);"
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"accessType\": \"private\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/qAzef32F/example.txt",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"qAzef32F",
+						"example.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update file access to public - user2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "73694dfe-d705-4e78-8f10-ad8a1a33bb8a",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"accessType\": \"public\"\n}"
+				},
+				"url": {
+					"raw": "localhost:3000/hT9Lmdx/{{user2FileId}}?access_token={{user2FileToken}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"hT9Lmdx",
+						"{{user2FileId}}"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "{{user2FileToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download private file - user1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/qAzef32F/{{user1FileId}}?access_token={{user1FileToken}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"qAzef32F",
+						"{{user1FileId}}"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "{{user1FileToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Download public file - user2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/hT9Lmdx/example.txt",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"hT9Lmdx",
+						"example.txt"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get public file metadata - user2",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {},
+				"url": {
+					"raw": "localhost:3000/hT9Lmdx/example.txt?metadata=true",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"hT9Lmdx",
+						"example.txt"
+					],
+					"query": [
+						{
+							"key": "metadata",
+							"value": "true"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete private file - user1",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/qAzef32F/{{user1FileId}}?access_token={{user1FileToken}}",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"qAzef32F",
+						"{{user1FileId}}"
+					],
+					"query": [
+						{
+							"key": "access_token",
+							"value": "{{user1FileToken}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete public file - user2",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "",
+							"value": "",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "localhost:3000/hT9Lmdx/example.txt",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"hT9Lmdx",
+						"example.txt"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
