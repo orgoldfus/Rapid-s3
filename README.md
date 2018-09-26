@@ -15,7 +15,7 @@ s3-like Object Storage API (RapidAPI code challenge)
 
 3. Define the required environment variables:
 * `DB_HOST` - The mongodb server address. If the default docker-compose file is used to create the db, the address is: `mongodb://localhost:27017`
-* `DB_NAME` - The db name. If this env varibale is not defined, the name `rapids3` is used by default.
+* `DB_NAME` - The db name. If this env variable is not defined, the name `rapids3` is used by default.
 * `STORAGE_PATH` - The path to the storage folder. Uploaded files will be stored in this folder. The folder must be created manually before starting the server.
 
 **The easiest way to define these variables is by adding them to a `.env` file.**
@@ -39,7 +39,7 @@ Allows a user uploading a file. Body type should be `form-data`.
 * `accessType` - can be either `private` or `public`
 
 #### Response:
-If the upload ended succefully, a JSON object in the following structure will be returned:
+If the upload ended successfully, a JSON object in the following structure will be returned:
 ```
 {
     "fileId": "84a8b2e3a8c46803cea5a425cf684c30",
@@ -56,7 +56,7 @@ or, for private files:
 }
 ```
 
-### Update file metada - `POST /:userId/:fileIdentifier`
+### Update file metadata - `POST /:userId/:fileIdentifier`
 Allows a user updating a previously uploaded file metadata (currently - only access type). Body type should be JSON.
 fileIdentifier is the file name (e.g: `example.txt`) if the file is `public` and file Id if the file is `private`.
 Also, if the file current accessType is `private`, an access token should be provided as a query param (e.g: `localhost:3000/hT9Lmdx/cbff509b837fb15a1d?access_token=GkVflhqld`).
@@ -65,7 +65,7 @@ Also, if the file current accessType is `private`, an access token should be pro
 * `accessType` - can be either `private` or `public`
 
 #### Response:
-If the update ended succefully, a JSON object in the following structure will be returned:
+If the update ended successfully, a JSON object in the following structure will be returned:
 ```
 {
     "fileId": "84a8b2e3a8c46803cea5a425cf684c30",
@@ -90,7 +90,7 @@ You can get the file metadata instead by adding the `metadata` query param (e.g:
 
 #### Response:
 The requested file.
-If the metada flag was added, a JSON object in the following structure will be returned:
+If the metadata flag was added, a JSON object in the following structure will be returned:
 ```
 {
     "fileName": "example.txt",
