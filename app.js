@@ -4,7 +4,7 @@ const express = require('express');
 require('express-async-errors');
 const logger = require('morgan');
 const mongoose = require('mongoose');
-const dbConnectionString = `${process.env.DB_HOST}/${process.env.DB_NAME}`
+const dbConnectionString = `${process.env.DB_HOST}/${process.env.DB_NAME || 'rapids3'}`
 mongoose.connect(dbConnectionString);
 
 if(!process.env.STORAGE_PATH) {
@@ -30,7 +30,7 @@ app.use(function(err, req, res, next) {
   const errorMsg = req.app.get('env') === 'development' 
     ? err.message : 'An error was accured';
 
-  res.status(err.status || 500).send(errorMsg)
+  return res.status(err.status || 500).send(errorMsg);
 });
 
 module.exports = app;
