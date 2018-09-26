@@ -1,6 +1,4 @@
 const fs = require('fs').promises;
-const path = require('path');
-const STORAGE_PATH = path.join(__root, 'storage');
 
 async function deleteFile (req, res) {
   const file = req.file;
@@ -9,7 +7,7 @@ async function deleteFile (req, res) {
     return res.status(404).send('File not found')
   }
 
-  await fs.unlink(`${STORAGE_PATH}/${file.id}`);
+  await fs.unlink(`${process.env.STORAGE_PATH}/${file.id}`);
   file.deletedAt = Date.now();
   await file.save();
 

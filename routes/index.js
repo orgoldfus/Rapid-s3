@@ -1,8 +1,6 @@
 const router = require('express').Router();
-const path = require('path');
 const multer  = require('multer');
-const STORAGE_PATH = path.join(__root, 'storage');
-const storage = multer({ dest: STORAGE_PATH });
+const storage = multer({ dest: process.env.STORAGE_PATH });
 const {
   getUser, 
   getFile, 
@@ -15,6 +13,7 @@ const {
   deleteFile
 } = require('./file')
 
+// Routes
 router.post('/:userId', 
   storage.single('file'), 
   getUser, 

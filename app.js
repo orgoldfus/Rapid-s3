@@ -1,13 +1,17 @@
+require('dotenv').config()
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const logger = require('morgan');
-global.__root = __dirname;
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost:27017/rapids3');
+const dbConnectionString = `${process.env.DB_HOST}/${process.env.DB_NAME}`
+mongoose.connect(dbConnectionString);
+
+if(!process.env.STORAGE_PATH) {
+  throw new Error('STORAGE_PATH must be set');
+}
 
 const routes = require('./routes/index');
-
 const app = express();
 
 app.use(logger('dev'));

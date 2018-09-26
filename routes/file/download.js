@@ -1,6 +1,3 @@
-const path = require('path');
-const STORAGE_PATH = path.join(__root, 'storage');
-
 async function downloadFile (req, res) {
   const file = req.file;
   
@@ -16,7 +13,7 @@ async function downloadFile (req, res) {
     return res.status(404).send('File not found')
   }
 
-  return res.sendFile(`${STORAGE_PATH}/${file.id}`);
+  return res.sendFile(`${process.env.STORAGE_PATH}/${file.id}`);
 }
 
 module.exports = downloadFile;

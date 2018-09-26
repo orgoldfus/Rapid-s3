@@ -1,7 +1,5 @@
-const shortid = require('shortid');
 const fs = require('fs').promises
-const path = require('path');
-const STORAGE_PATH = path.join(__root, 'storage');
+const shortid = require('shortid');
 const FileModel = require('../../models/fileModel');
 
 async function uploadFileMultipart (req, res) { 
@@ -57,7 +55,7 @@ async function uploadFileMultipart (req, res) {
 }
 
 async function deleteFile(fileName) {
-  await fs.unlink(`${STORAGE_PATH}/${fileName}`);
+  await fs.unlink(`${process.env.STORAGE_PATH}/${fileName}`);
 }
 
 module.exports = uploadFileMultipart
